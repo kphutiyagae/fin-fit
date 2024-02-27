@@ -1,7 +1,7 @@
 import {Budget} from "@angular-devkit/build-angular";
 
 export interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
 }
