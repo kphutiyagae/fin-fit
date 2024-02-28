@@ -4,7 +4,14 @@ module.exports = {
     "./src/**/*.{html,ts}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'primary': '#413aa3'
+      },
+      // fontFamily: {
+      //   'outfit': ['Outfit', 'sans-serif']
+      // }
+    },
   },
   plugins: [],
 }

@@ -8,6 +8,7 @@ import { BudgetComponent } from './pages/budget/budget.component';
 import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SignupComponent } from './pages/signup/signup.component';
     BudgetComponent,
     AnalyticsComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
