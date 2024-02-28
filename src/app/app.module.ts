@@ -9,6 +9,7 @@ import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NavigationComponent } from './components/navigation/navigation.componen
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    IonicModule.forRoot({})
   ],
   providers: [],
   bootstrap: [AppComponent]

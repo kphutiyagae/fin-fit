@@ -1,10 +1,43 @@
-import { Component } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Chart, ChartConfiguration} from "chart.js/auto";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, AfterViewInit{
 
+  ngOnInit() {
+    this.renderChart();
+  }
+
+  ngAfterViewInit() {
+
+    const myChart = new Chart('', {
+      type: 'doughnut',
+      data: {
+        labels: ['Spent', 'Remaining'],
+        datasets: [{
+          label: '# of Votes',
+          data: ['Spent', 'Remaining'],
+          backgroundColor: ['red'],
+          borderColor: [
+            'rgba(255, 99, 132, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+
+  renderChart(){
+  }
 }
