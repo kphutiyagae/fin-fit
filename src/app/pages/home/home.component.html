@@ -21,8 +21,8 @@
       </svg>
       <p class="text-xs">Add budget</p>
     </button>
-    <ion-list class="w-10/12 mt-6">
-      <ion-item>No budgets</ion-item>
+    <ion-list class="w-10/12 mt-6" *ngFor="(categories$ | async) as categories">
+      <ion-item>{{categories.length}}</ion-item>
     </ion-list>
   </div>
 
