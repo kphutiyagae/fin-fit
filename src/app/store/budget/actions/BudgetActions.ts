@@ -1,8 +1,14 @@
 import {IBudget} from "../../../models/IBudget";
 
 export class GetAllUserBudgets{
-  static readonly type = '[BUDGET] Get Budgets';
+  static readonly type = '[BUDGET] Get Budgets List';
   constructor(public payload: string) {
+  }
+}
+
+export class UpdateUserBudgets{
+  static readonly type = '[BUDGET] Update Budgets List';
+  constructor(public payload: IBudget[]) {
   }
 }
 
