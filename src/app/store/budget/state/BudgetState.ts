@@ -1,20 +1,31 @@
 import {IBudget} from "../../../models/IBudget";
 import {Action, Selector, State, StateContext, Store} from "@ngxs/store";
-import {ClearUserBudgets, GetAllUserBudgets, UpdateCurrentBudget, UpdateUserBudgets} from "../actions/BudgetActions";
+import {
+  ClearUserBudgets,
+  GetAllUserBudgets,
+  UpdateCurrentBudget, UpdateExpenseLimit,
+  UpdateTotalExpenses,
+  UpdateUserBudgets
+} from "../actions/BudgetActions";
 import {ApiService} from "../../../services/api/api.service";
 import {map, switchMap, take, tap} from "rxjs";
 import {Injectable} from "@angular/core";
+import {calculateTotalExpense} from "../../../utils/utils";
 
 export class BudgetStateModel {
   currentBudget!: string;
   budgets: IBudget[] | undefined;
+  totalExpenses!: number;
+  expenseLimit!: number;
 }
 
 @State<BudgetStateModel>({
   name: 'budget',
   defaults: {
     currentBudget: '',
-    budgets: []
+    budgets: [],
+    totalExpenses: 0,
+    expenseLimit: 0
   }
 })
 
@@ -30,14 +41,19 @@ export class BudgetState {
     return state.currentBudget;
   }
 
+  @Selector()
+  static getAvailableSpend(state: BudgetStateModel){
+    return Math.abs(state.expenseLimit - state.totalExpenses);
+  }
+
   @Action(GetAllUserBudgets)
   getAllUserBudgets({payload}: GetAllUserBudgets){
     const userBudgets$ = this.apiService.getBudgetsByUserId('test');
 
     userBudgets$.pipe(
-      tap(console.log),
       take(1),
       map( userBudgets => {
+        this.store.dispatch(new UpdateTotalExpenses(calculateTotalExpense(userBudgets)));
         this.store.dispatch(new UpdateUserBudgets(userBudgets))
       })
     ).subscribe()
@@ -63,6 +79,20 @@ export class BudgetState {
     patchState({
       currentBudget: '',
       budgets: undefined
+    })
+  }
+
+  @Action(UpdateTotalExpenses)
+  updateTotalExpenses( {patchState}: StateContext<BudgetStateModel>, {payload}: UpdateTotalExpenses){
+    patchState({
+      totalExpenses: payload
+    })
+  }
+
+  @Action(UpdateExpenseLimit)
+  updateExpenseLimit( {patchState}: StateContext<BudgetStateModel>, {payload}: UpdateExpenseLimit){
+    patchState({
+      expenseLimit: payload
     })
   }
 

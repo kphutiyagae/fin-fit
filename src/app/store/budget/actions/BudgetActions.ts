@@ -31,6 +31,18 @@ export class UpdateCurrentBudget{
   }
 }
 
+export class UpdateTotalExpenses{
+  static readonly type = '[BUDGET] Update Total Expenses';
+  constructor(public payload: number) {
+  }
+}
+
+export class UpdateExpenseLimit{
+  static readonly type = '[BUDGET] Update Expense Limit';
+  constructor(public payload: number) {
+  }
+}
+
 export class ClearUserBudgets{
   static readonly type = '[BUDGET] Clear Budgets';
   constructor() {

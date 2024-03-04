@@ -1,13 +1,10 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Chart, ChartConfiguration} from "chart.js/auto";
 import {Router} from "@angular/router";
-import {ApiService} from "../../services/api/api.service";
-import {Observable, tap} from "rxjs";
-import {ITransactionType} from "../../models/ITransactionType";
-import {IUser} from "../../models/IUser";
-import {IBudget} from "../../models/IBudget";
-import {Store} from "@ngxs/store";
+import {Select, Store} from "@ngxs/store";
 import {GetAllUserBudgets} from "../../store/budget/actions/BudgetActions";
+import {Observable, tap} from "rxjs";
+import {BudgetState} from "../../store/budget/state/BudgetState";
 
 @Component({
   selector: 'app-home',
@@ -16,7 +13,8 @@ import {GetAllUserBudgets} from "../../store/budget/actions/BudgetActions";
 })
 export class HomeComponent implements OnInit, AfterViewInit{
 
-  // categories$: Observable<IBudget[]>
+  availableSpend$: Observable<number>;
+
   ngOnInit() {
     this.renderChart();
   }
@@ -64,5 +62,6 @@ export class HomeComponent implements OnInit, AfterViewInit{
     // const testUser: IUser = {budgets: [], uid: "test", username: "johnny@test.com"}
     // this.categories$ = this.apiService.getBudgetsByUserId('test');
     this.store.dispatch(new GetAllUserBudgets('john.doe@test.com'))
+    this.availableSpend$ = this.store.select(BudgetState.getAvailableSpend)
   }
 }
