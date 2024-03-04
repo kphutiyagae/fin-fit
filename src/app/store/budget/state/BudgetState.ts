@@ -2,10 +2,11 @@ import {IBudget} from "../../../models/IBudget";
 import {Action, Selector, State, StateContext, Store} from "@ngxs/store";
 import {ClearUserBudgets, GetAllUserBudgets, UpdateCurrentBudget, UpdateUserBudgets} from "../actions/BudgetActions";
 import {ApiService} from "../../../services/api/api.service";
-import {map, takeLast} from "rxjs";
+import {map, switchMap, take, tap} from "rxjs";
+import {Injectable} from "@angular/core";
 
 export class BudgetStateModel {
-  currentBudget: string;
+  currentBudget!: string;
   budgets: IBudget[] | undefined;
 }
 
@@ -13,10 +14,11 @@ export class BudgetStateModel {
   name: 'budget',
   defaults: {
     currentBudget: '',
-    budgets: undefined
+    budgets: []
   }
 })
 
+@Injectable()
 export class BudgetState {
   @Selector()
   static getBudgets(state: BudgetStateModel){
@@ -33,11 +35,12 @@ export class BudgetState {
     const userBudgets$ = this.apiService.getBudgetsByUserId('test');
 
     userBudgets$.pipe(
-      takeLast(1),
+      tap(console.log),
+      take(1),
       map( userBudgets => {
         this.store.dispatch(new UpdateUserBudgets(userBudgets))
       })
-    )
+    ).subscribe()
 
   }
 

@@ -33,6 +33,7 @@
     "@angular/cli": "~16.0.0",
     "@angular/compiler-cli": "^16.0.0",
     "@ionic/angular-toolkit": "latest",
+    "@ngxs/devtools-plugin": "^3.8.2",
     "@types/jasmine": "~4.3.0",
     "autoprefixer": "^10.4.17",
     "jasmine-core": "~4.6.0",

@@ -15,6 +15,7 @@ import {from, Observable, of, switchMap, tap} from "rxjs";
 import {ITransactionType} from "../../models/ITransactionType";
 import {IBudget} from "../../models/IBudget";
 import {IUser} from "../../models/IUser";
+import {IBudgetDTO} from "../../models/dto/IBudgetDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,13 @@ export class ApiService {
   getBudgetsByUserId(uid: string){
     const tripCollection = collection(this.firestore, 'budgets');
     const queryRef = query(tripCollection, where('uid','==',`${uid}`))
-    return collectionData(queryRef) as Observable<IBudget[]>;
+    return (collectionData(queryRef) as Observable<IBudgetDTO[]>)
+      .pipe(
+        switchMap( budgetDTOList => {
+            return of(budgetDTOList.at(0)?.budgets ?? []);
+        })
+      );
+
   }
 
   getAllTransactionTypes(){

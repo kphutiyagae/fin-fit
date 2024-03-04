@@ -1,5 +1,6 @@
 import {ITransaction} from "./ITransaction";
 
+
 export interface IBudget {
   id: string;
   title: string;

@@ -1,4 +1,5 @@
 import {IBudget} from "../../../models/IBudget";
+import {IBudgetDTO} from "../../../models/dto/IBudgetDTO";
 
 export class GetAllUserBudgets{
   static readonly type = '[BUDGET] Get Budgets List';

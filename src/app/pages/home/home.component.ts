@@ -6,6 +6,8 @@ import {Observable, tap} from "rxjs";
 import {ITransactionType} from "../../models/ITransactionType";
 import {IUser} from "../../models/IUser";
 import {IBudget} from "../../models/IBudget";
+import {Store} from "@ngxs/store";
+import {GetAllUserBudgets} from "../../store/budget/actions/BudgetActions";
 
 @Component({
   selector: 'app-home',
@@ -14,7 +16,7 @@ import {IBudget} from "../../models/IBudget";
 })
 export class HomeComponent implements OnInit, AfterViewInit{
 
-  categories$: Observable<IBudget[]>
+  // categories$: Observable<IBudget[]>
   ngOnInit() {
     this.renderChart();
   }
@@ -58,8 +60,9 @@ export class HomeComponent implements OnInit, AfterViewInit{
   renderChart(){
   }
 
-  constructor(private router: Router, private apiService: ApiService) {
-    const testUser: IUser = {budgets: [], uid: "test", username: "johnny@test.com"}
-    this.categories$ = this.apiService.getBudgetsByUserId('test').pipe(tap(console.log));
+  constructor(private router: Router, private store: Store) {
+    // const testUser: IUser = {budgets: [], uid: "test", username: "johnny@test.com"}
+    // this.categories$ = this.apiService.getBudgetsByUserId('test');
+    this.store.dispatch(new GetAllUserBudgets('john.doe@test.com'))
   }
 }

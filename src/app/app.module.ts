@@ -18,6 +18,9 @@ import {getAuth, provideAuth} from "@angular/fire/auth";
 import {getDatabase, provideDatabase} from "@angular/fire/database";
 import {getFirestore, provideFirestore} from "@angular/fire/firestore";
 import {getFunctions, provideFunctions} from "@angular/fire/functions";
+import {NgxsModule} from "@ngxs/store";
+import {BudgetState} from "./store/budget/state/BudgetState";
+import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
 
 @NgModule({
   declarations: [
@@ -39,6 +42,10 @@ import {getFunctions, provideFunctions} from "@angular/fire/functions";
     provideDatabase(() => getDatabase()),
     provideFirestore(() => getFirestore()),
     provideFunctions(() => getFunctions()),
+    NgxsModule.forRoot([
+      BudgetState
+    ]),
+    NgxsReduxDevtoolsPluginModule.forRoot()
   ],
   providers: [
     {provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}
