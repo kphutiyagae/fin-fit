@@ -5,6 +5,8 @@ import {Select, Store} from "@ngxs/store";
 import {GetAllUserBudgets} from "../../store/budget/actions/BudgetActions";
 import {Observable, tap} from "rxjs";
 import {BudgetState} from "../../store/budget/state/BudgetState";
+import {IBudget} from "../../models/IBudget";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-home',
@@ -14,7 +16,7 @@ import {BudgetState} from "../../store/budget/state/BudgetState";
 export class HomeComponent implements OnInit, AfterViewInit{
 
   availableSpend$: Observable<number>;
-
+  budgetList$: Observable<IBudget[]>;
   ngOnInit() {
     this.renderChart();
   }
@@ -58,10 +60,12 @@ export class HomeComponent implements OnInit, AfterViewInit{
   renderChart(){
   }
 
-  constructor(private router: Router, private store: Store) {
+  constructor(private router: Router, private store: Store, private datePipe: DatePipe) {
     // const testUser: IUser = {budgets: [], uid: "test", username: "johnny@test.com"}
     // this.categories$ = this.apiService.getBudgetsByUserId('test');
     this.store.dispatch(new GetAllUserBudgets('john.doe@test.com'))
     this.availableSpend$ = this.store.select(BudgetState.getAvailableSpend)
+    this.budgetList$ = this.store.select(BudgetState.getBudgets)
   }
+
 }

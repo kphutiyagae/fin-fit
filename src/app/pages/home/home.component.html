@@ -21,8 +21,26 @@
       </svg>
       <p class="text-xs">Add budget</p>
     </button>
-    <ion-list class="w-10/12 mt-6" *ngFor="(categories$ | async) as categories">
-      <ion-item>{{categories.length}}</ion-item>
+    <ion-list class="w-10/12 mt-6" *ngIf="(budgetList$ | async) as budgets">
+      <ion-item *ngFor="let budget of budgets; index as i" id="{{budget.id}}" class="cursor-pointer flex flex-col">
+<!--        <div class="w-full flex flex-row justify-between block">-->
+<!--          <p>{{budget?.title ?? 'Budget Title'}}</p>-->
+<!--          <p>{{budget?.totalExpense ?? 0}}</p>-->
+<!--        </div>-->
+<!--        <div class="w-full">-->
+<!--          <p class="w-full">{{ budget.dateEnd | date: 'mediumDate'}}</p>-->
+<!--        </div>-->
+        <ion-thumbnail slot="start">
+          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+        </ion-thumbnail>
+        <ion-label>
+          <p class="text-3xl">{{budget?.title ?? 'Budget Title'}}</p>
+          <p class="mt-12">{{ budget.dateEnd | date: 'mediumDate'}}</p>
+        </ion-label>
+        <ion-label slot="end">
+          <p>{{budget?.totalExpense ?? 0}}</p>
+        </ion-label>
+      </ion-item>
     </ion-list>
   </div>
 

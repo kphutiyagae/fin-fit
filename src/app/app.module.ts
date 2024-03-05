@@ -21,6 +21,7 @@ import {getFunctions, provideFunctions} from "@angular/fire/functions";
 import {NgxsModule} from "@ngxs/store";
 import {BudgetState} from "./store/budget/state/BudgetState";
 import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
     NgxsReduxDevtoolsPluginModule.forRoot()
   ],
   providers: [
-    {provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}
+    {provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig},
+    {provide: DatePipe}
   ],
   bootstrap: [AppComponent]
 })

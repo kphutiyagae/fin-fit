@@ -14,7 +14,7 @@ import {calculateTotalExpense} from "../../../utils/utils";
 
 export class BudgetStateModel {
   currentBudget!: string;
-  budgets: IBudget[] | undefined;
+  budgets!: IBudget[];
   totalExpenses!: number;
   expenseLimit!: number;
 }
