@@ -26,31 +26,47 @@
         <ion-header>
           <ion-toolbar>
             <ion-title>Add New Budget</ion-title>
+            <ion-button>Cancel</ion-button>
           </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
-          <p>
-            Click <strong>confirm</strong> to set your name (Jorge) and age (36) or
-            <strong>cancel</strong> to dismiss this modal.
-          </p>
-          <ion-button class="ion-margin" shape="round" expand="full" fill="outline" (click)="onWillDismiss($event)"
-          >Cancel</ion-button
-          >
-          <ion-button class="ion-margin" shape="round" expand="full" (click)="confirm()"
-          >Confirm</ion-button
-          >
+          <form (change)="logErrors()" [formGroup]="addNewBudgetForm" (submit)="addNewBudget()" class="flex flex-col justify-center">
+            <div class="flex flex-col mt-4 ml-3">
+              <label class="mb-4 text-lg font-bold">Title</label>
+              <input type="text" formControlName="budgetTitle" placeholder="Budget title" [ngClass]="addNewBudgetForm.controls['budgetTitle'].errors && this.addNewBudgetForm.controls['budgetTitle'].touched ? 'border-red-600 border-2' : ''" class="border border-black focus:border-primary rounded-md w-10/12 p-3">
+            </div>
+            <div *ngIf="addNewBudgetForm.controls['budgetTitle'].errors?.['required'] && this.addNewBudgetForm.controls['budgetTitle'].touched" class="bg-red-300 ml-3 mt-4 p-3 w-10/12 rounded-md">
+              <p class="text-red-700">A title is required for your budget.</p>
+            </div>
+            <div class="flex flex-col mt-4 ml-3">
+              <label class="mb-4 text-lg font-bold">Limit</label>
+              <input type="number" formControlName="budgetLimit" class="border border-black focus:border-primary rounded-md w-10/12 p-3">
+            </div>
+            <div class="flex flex-col mt-4 ml-3">
+              <label class="mb-4 text-lg font-bold">Expenses</label>
+              <input type="number" formControlName="budgetExpenses"  class="border border-black focus:border-primary rounded-md w-10/12 p-3">
+            </div>
+            <div class="flex flex-row mt-4 ml-3">
+              <div>
+                <label class="mb-8 text-lg font-bold">Start Date</label>
+                <input type="date" formControlName="budgetDateStart"  class="border border-black focus:border-primary rounded-md w-10/12 p-3">
+              </div>
+              <div>
+                <label class="mb-8 text-lg font-bold">End Date</label>
+                <input type="date" formControlName="budgetDateEnd"  class="border border-black focus:border-primary rounded-md w-10/12 p-3">
+              </div>
+            </div>
+            <div class="flex flex-col mt-4 ml-3">
+              <label class="mb-4 text-lg font-bold">Transactions</label>
+              <input type="number" formControlName="budgetTransactions"  class="border border-black focus:border-primary rounded-md w-10/12 p-3">
+            </div>
+            <ion-button type="submit" class="mt-12 disabled:bg-gray-600 disabled:cursor-not-allowed" [disabled]="!addNewBudgetForm.valid">Create Budget</ion-button>
+          </form>
         </ion-content>
       </ng-template>
     </ion-modal>
     <ion-list class="w-10/12 mt-6" *ngIf="(budgetList$ | async) as budgets">
       <ion-item *ngFor="let budget of budgets; index as i" id="{{budget.id}}" class="cursor-pointer flex flex-col">
-<!--        <div class="w-full flex flex-row justify-between block">-->
-<!--          <p>{{budget?.title ?? 'Budget Title'}}</p>-->
-<!--          <p>{{budget?.totalExpense ?? 0}}</p>-->
-<!--        </div>-->
-<!--        <div class="w-full">-->
-<!--          <p class="w-full">{{ budget.dateEnd | date: 'mediumDate'}}</p>-->
-<!--        </div>-->
         <ion-thumbnail slot="start">
           <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
         </ion-thumbnail>

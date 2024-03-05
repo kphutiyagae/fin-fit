@@ -22,6 +22,7 @@ import {NgxsModule} from "@ngxs/store";
 import {BudgetState} from "./store/budget/state/BudgetState";
 import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
 import {DatePipe} from "@angular/common";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {DatePipe} from "@angular/common";
     NgxsModule.forRoot([
       BudgetState
     ]),
-    NgxsReduxDevtoolsPluginModule.forRoot()
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    ReactiveFormsModule
   ],
   providers: [
     {provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig},

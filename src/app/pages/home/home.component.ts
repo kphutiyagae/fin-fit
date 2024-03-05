@@ -9,6 +9,7 @@ import {IBudget} from "../../models/IBudget";
 import {DatePipe} from "@angular/common";
 import {IonModal} from "@ionic/angular";
 import { OverlayEventDetail } from '@ionic/core/components';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-home',
@@ -22,6 +23,8 @@ export class HomeComponent implements OnInit, AfterViewInit{
 
   @ViewChild(IonModal) addBudgetModal!: IonModal;
   private name: string = '';
+
+  public addNewBudgetForm: FormGroup;
 
   ngOnInit() {
     this.renderChart();
@@ -74,6 +77,10 @@ export class HomeComponent implements OnInit, AfterViewInit{
     this.addBudgetModal?.dismiss(this.name, 'confirm');
   }
 
+  addNewBudget(){
+    console.log('Adding...', this.addNewBudgetForm.value);
+  }
+
   onWillDismiss(event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
@@ -84,6 +91,17 @@ export class HomeComponent implements OnInit, AfterViewInit{
     this.store.dispatch(new GetAllUserBudgets('john.doe@test.com'))
     this.availableSpend$ = this.store.select(BudgetState.getAvailableSpend)
     this.budgetList$ = this.store.select(BudgetState.getBudgets)
+    this.addNewBudgetForm = new FormGroup({
+      budgetTitle: new FormControl('', [Validators.required, Validators.minLength(1)]),
+      budgetExpenses: new FormControl(0, [Validators.min(0)]),
+      budgetLimit: new FormControl(0, [Validators.min(0), Validators.required]),
+      budgetTransactions: new FormControl([]),
+      budgetDateStart: new FormControl('', [Validators.required]),
+      budgetDateEnd: new FormControl('')
+    })
   }
 
+  logErrors(){
+    console.log()
+  }
 }
