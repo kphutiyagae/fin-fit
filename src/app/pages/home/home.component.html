@@ -12,7 +12,7 @@
 
   <div class="ml-8 mt-6">
     <h2 class="text-2xl font-black mb-2">Budgets</h2>
-    <button (click)="navigateToPage('budgets')" class="flex flex-row items-center gap-1 text-white bg-primary p-2 rounded-md">
+    <button id="open-modal" class="flex flex-row items-center gap-1 text-white bg-primary p-2 rounded-md">
       <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
         <path fill="none" stroke-miterlimit="10" stroke-width="32" d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z">
         </path>
@@ -21,6 +21,27 @@
       </svg>
       <p class="text-xs">Add budget</p>
     </button>
+    <ion-modal #addBudgetModal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Add New Budget</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <p>
+            Click <strong>confirm</strong> to set your name (Jorge) and age (36) or
+            <strong>cancel</strong> to dismiss this modal.
+          </p>
+          <ion-button class="ion-margin" shape="round" expand="full" fill="outline" (click)="onWillDismiss($event)"
+          >Cancel</ion-button
+          >
+          <ion-button class="ion-margin" shape="round" expand="full" (click)="confirm()"
+          >Confirm</ion-button
+          >
+        </ion-content>
+      </ng-template>
+    </ion-modal>
     <ion-list class="w-10/12 mt-6" *ngIf="(budgetList$ | async) as budgets">
       <ion-item *ngFor="let budget of budgets; index as i" id="{{budget.id}}" class="cursor-pointer flex flex-col">
 <!--        <div class="w-full flex flex-row justify-between block">-->

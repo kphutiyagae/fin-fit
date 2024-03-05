@@ -7,6 +7,8 @@ import {Observable, tap} from "rxjs";
 import {BudgetState} from "../../store/budget/state/BudgetState";
 import {IBudget} from "../../models/IBudget";
 import {DatePipe} from "@angular/common";
+import {IonModal} from "@ionic/angular";
+import { OverlayEventDetail } from '@ionic/core/components';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +19,10 @@ export class HomeComponent implements OnInit, AfterViewInit{
 
   availableSpend$: Observable<number>;
   budgetList$: Observable<IBudget[]>;
+
+  @ViewChild(IonModal) addBudgetModal!: IonModal;
+  private name: string = '';
+
   ngOnInit() {
     this.renderChart();
   }
@@ -24,7 +30,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
   navigateToPage(pageName: string){
     switch (pageName) {
       case 'budgets':
-        this.router.navigate(['/budget']);
+        // this.router.navigate(['/budget']);
         break;
       default:
         break;
@@ -60,9 +66,21 @@ export class HomeComponent implements OnInit, AfterViewInit{
   renderChart(){
   }
 
+  cancel() {
+    this.addBudgetModal?.dismiss(null, 'cancel');
+  }
+
+  confirm() {
+    this.addBudgetModal?.dismiss(this.name, 'confirm');
+  }
+
+  onWillDismiss(event: Event) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === 'confirm') {
+      // this.message = `Hello, ${ev.detail.data}!`;
+    }
+  }
   constructor(private router: Router, private store: Store, private datePipe: DatePipe) {
-    // const testUser: IUser = {budgets: [], uid: "test", username: "johnny@test.com"}
-    // this.categories$ = this.apiService.getBudgetsByUserId('test');
     this.store.dispatch(new GetAllUserBudgets('john.doe@test.com'))
     this.availableSpend$ = this.store.select(BudgetState.getAvailableSpend)
     this.budgetList$ = this.store.select(BudgetState.getBudgets)
