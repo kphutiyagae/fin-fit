@@ -31,13 +31,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
   }
 
   navigateToPage(pageName: string){
-    switch (pageName) {
-      case 'budgets':
-        // this.router.navigate(['/budget']);
-        break;
-      default:
-        break;
-    }
+    this.router.navigate([`/budget/${pageName}`]);
   }
 
   ngAfterViewInit() {

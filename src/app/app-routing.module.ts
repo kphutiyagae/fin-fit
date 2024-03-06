@@ -12,7 +12,7 @@ const routes: Routes = [
     component: AnalyticsComponent
   },
   {
-    path: 'budget',
+    path: 'budget/:id',
     component: BudgetComponent
   },
   {

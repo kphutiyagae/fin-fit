@@ -26,7 +26,7 @@
         <ion-header>
           <ion-toolbar>
             <ion-title>Add New Budget</ion-title>
-            <ion-button>Cancel</ion-button>
+            <ion-button (click)="cancel()">Cancel</ion-button>
           </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
@@ -78,7 +78,7 @@
       </ng-template>
     </ion-modal>
     <ion-list class="w-10/12 mt-6" *ngIf="(budgetList$ | async) as budgets">
-      <ion-item *ngFor="let budget of budgets; index as i" id="{{budget.id}}" class="cursor-pointer flex flex-col">
+      <ion-item (click)="navigateToPage(budget.id)" *ngFor="let budget of budgets; index as i" id="{{budget.id}}" class="cursor-pointer flex flex-col">
         <ion-thumbnail slot="start">
           <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
         </ion-thumbnail>

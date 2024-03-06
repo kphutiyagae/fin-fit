@@ -107,7 +107,7 @@ export class BudgetState {
 
     this.apiService.addBudget(newBudgetList, state.currentBudget);
 
-    // this.store.dispatch(new UpdateUserBudgets(state.))
+    this.store.dispatch(new UpdateUserBudgets(newBudgetList));
   }
 
   constructor(private apiService: ApiService, private store: Store) {
