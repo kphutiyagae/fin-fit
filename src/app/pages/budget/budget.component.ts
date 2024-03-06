@@ -4,7 +4,7 @@ import {IBudget} from "../../models/IBudget";
 import {Store} from "@ngxs/store";
 import {ActivatedRoute, UrlSegment} from "@angular/router";
 import {BudgetState} from "../../store/budget/state/BudgetState";
-
+import {getRemainingDays} from "../../utils/utils";
 @Component({
   selector: 'app-budget',
   templateUrl: './budget.component.html',
@@ -13,6 +13,8 @@ import {BudgetState} from "../../store/budget/state/BudgetState";
 export class BudgetComponent {
 
   currentBudget$: Observable<IBudget | undefined>;
+
+  calculateRemainingDays = getRemainingDays;
 
   constructor(private store: Store, private route: ActivatedRoute) {
     this.currentBudget$ = this.route.url
