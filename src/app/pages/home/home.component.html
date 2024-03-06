@@ -30,7 +30,7 @@
           </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
-          <form (change)="logErrors()" [formGroup]="addNewBudgetForm" (submit)="addNewBudget()" class="flex flex-col justify-center">
+          <form [formGroup]="addNewBudgetForm" (submit)="addNewBudget()" class="flex flex-col justify-center">
             <div class="flex flex-col mt-4 ml-3">
               <label class="mb-4 text-lg font-bold">Title</label>
               <input type="text" formControlName="budgetTitle" placeholder="Budget title" [ngClass]="addNewBudgetForm.controls['budgetTitle'].errors && this.addNewBudgetForm.controls['budgetTitle'].touched ? 'border-red-600 border-2' : ''" class="border border-black focus:border-primary rounded-md w-10/12 p-3">
@@ -40,11 +40,20 @@
             </div>
             <div class="flex flex-col mt-4 ml-3">
               <label class="mb-4 text-lg font-bold">Limit</label>
-              <input type="number" formControlName="budgetLimit" class="border border-black focus:border-primary rounded-md w-10/12 p-3">
+              <input type="number" min="0" formControlName="budgetLimit" class="border border-black focus:border-primary rounded-md w-10/12 p-3">
+            </div>
+            <div *ngIf="addNewBudgetForm.controls['budgetLimit'].errors?.['min'] && this.addNewBudgetForm.controls['budgetLimit'].touched" class="bg-red-300 ml-3 mt-4 p-3 w-10/12 rounded-md">
+              <p class="text-red-700">Budget limit must be a positive number.</p>
+            </div>
+            <div *ngIf="addNewBudgetForm.controls['budgetLimit'].errors?.['required'] && this.addNewBudgetForm.controls['budgetLimit'].touched" class="bg-red-300 ml-3 mt-4 p-3 w-10/12 rounded-md">
+              <p class="text-red-700">Budget limit is required.</p>
             </div>
             <div class="flex flex-col mt-4 ml-3">
               <label class="mb-4 text-lg font-bold">Expenses</label>
-              <input type="number" formControlName="budgetExpenses"  class="border border-black focus:border-primary rounded-md w-10/12 p-3">
+              <input type="number" min="0" formControlName="budgetExpenses"  class="border border-black focus:border-primary rounded-md w-10/12 p-3">
+            </div>
+            <div *ngIf="addNewBudgetForm.controls['budgetExpenses'].errors?.['min'] && this.addNewBudgetForm.controls['budgetExpenses'].touched" class="bg-red-300 ml-3 mt-4 p-3 w-10/12 rounded-md">
+              <p class="text-red-700">Budget expense amount must be a positive number.</p>
             </div>
             <div class="flex flex-row mt-4 ml-3">
               <div>
@@ -55,6 +64,9 @@
                 <label class="mb-8 text-lg font-bold">End Date</label>
                 <input type="date" formControlName="budgetDateEnd"  class="border border-black focus:border-primary rounded-md w-10/12 p-3">
               </div>
+            </div>
+            <div *ngIf="addNewBudgetForm.controls['budgetDateStart'].errors?.['required'] && this.addNewBudgetForm.controls['budgetDateStart'].touched" class="bg-red-300 ml-3 mt-4 p-3 w-10/12 rounded-md">
+              <p class="text-red-700">Budget start date is required</p>
             </div>
             <div class="flex flex-col mt-4 ml-3">
               <label class="mb-4 text-lg font-bold">Transactions</label>

@@ -31,7 +31,12 @@ export class ApiService {
     )
   }
 
-  addBudget(budget: IBudget){}
+  addBudget(budgetList: IBudget[], documentId: string){
+    const budgetDocRef = doc(this.firestore, `budgets/${documentId}`);
+    return from( updateDoc(budgetDocRef, {
+      'budgets': budgetList
+    }) );
+  }
 
   updateBudget(){}
 
@@ -50,6 +55,10 @@ export class ApiService {
   getAllTransactionTypes(){
     const tripReference = collection(this.firestore, `transaction-types`);
     return collectionData(tripReference) as Observable<ITransactionType[]>;
+  }
+
+  generateBudgetId(){
+    return doc(collection(this.firestore, '_')).id;
   }
   constructor(private httpClient: HttpClient) { }
 }

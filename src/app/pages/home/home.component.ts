@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 import {Chart, ChartConfiguration} from "chart.js/auto";
 import {Router} from "@angular/router";
 import {Select, Store} from "@ngxs/store";
-import {GetAllUserBudgets} from "../../store/budget/actions/BudgetActions";
+import {AddBudget, GetAllUserBudgets, UpdateCurrentBudget} from "../../store/budget/actions/BudgetActions";
 import {Observable, tap} from "rxjs";
 import {BudgetState} from "../../store/budget/state/BudgetState";
 import {IBudget} from "../../models/IBudget";
@@ -78,7 +78,17 @@ export class HomeComponent implements OnInit, AfterViewInit{
   }
 
   addNewBudget(){
-    console.log('Adding...', this.addNewBudgetForm.value);
+    const newBudget: IBudget = {
+      budgetLimit: this.addNewBudgetForm?.controls?.['budgetLimit'].value ?? 0,
+      dateEnd: this.addNewBudgetForm?.controls?.['budgetDateEnd']?.value ?? '',
+      dateStart: this.addNewBudgetForm?.controls?.['budgetDateStart']?.value ?? '',
+      id: '',
+      title: this.addNewBudgetForm?.controls?.['budgetTitle']?.value ?? '',
+      totalExpense: this.addNewBudgetForm?.controls?.['TotalExpense']?.value ?? 0,
+      transactions: []
+    }
+
+    this.store.dispatch(new AddBudget(newBudget))
   }
 
   onWillDismiss(event: Event) {
@@ -88,7 +98,8 @@ export class HomeComponent implements OnInit, AfterViewInit{
     }
   }
   constructor(private router: Router, private store: Store, private datePipe: DatePipe) {
-    this.store.dispatch(new GetAllUserBudgets('john.doe@test.com'))
+    this.store.dispatch(new GetAllUserBudgets('test'))
+    this.store.dispatch(new UpdateCurrentBudget('1wBI5MWcmIyhRyj0b60h'))
     this.availableSpend$ = this.store.select(BudgetState.getAvailableSpend)
     this.budgetList$ = this.store.select(BudgetState.getBudgets)
     this.addNewBudgetForm = new FormGroup({
@@ -99,9 +110,5 @@ export class HomeComponent implements OnInit, AfterViewInit{
       budgetDateStart: new FormControl('', [Validators.required]),
       budgetDateEnd: new FormControl('')
     })
-  }
-
-  logErrors(){
-    console.log()
   }
 }

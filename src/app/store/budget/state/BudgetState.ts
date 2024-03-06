@@ -1,6 +1,7 @@
 import {IBudget} from "../../../models/IBudget";
 import {Action, Selector, State, StateContext, Store} from "@ngxs/store";
 import {
+  AddBudget,
   ClearUserBudgets,
   GetAllUserBudgets,
   UpdateCurrentBudget, UpdateExpenseLimit,
@@ -94,6 +95,19 @@ export class BudgetState {
     patchState({
       expenseLimit: payload
     })
+  }
+
+  @Action(AddBudget)
+  addBudget( {patchState, getState}: StateContext<BudgetStateModel>, {payload}: AddBudget ){
+    const state = getState();
+
+    payload.id = this.apiService.generateBudgetId();
+
+    const newBudgetList = [...state.budgets, payload]
+
+    this.apiService.addBudget(newBudgetList, state.currentBudget);
+
+    // this.store.dispatch(new UpdateUserBudgets(state.))
   }
 
   constructor(private apiService: ApiService, private store: Store) {
