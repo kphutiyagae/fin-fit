@@ -21,6 +21,33 @@
       <p class="ml-8 mt-4 text-lg font-semibold">Expense trends</p>
       <p class="ml-8 text-gray-500 mt-2 text-sm">You have spent <span id="relative-expense">R150 more than last period</span></p>
       <div class="ml-8 mt-6">Graph</div>
+      <div>
+        <p class="ml-8 mt-4 text-lg font-semibold">Transactions</p>
+        <ng-container *ngIf="currentBudget?.transactions?.length !== 0; else noTransactions">
+          <ion-list class="pl-4">
+            <ion-item *ngFor="let transaction of currentBudget.transactions; index as i" id="{{transaction.id}}" class="cursor-pointer flex flex-col mt-4">
+              <ion-thumbnail slot="start">
+                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+              </ion-thumbnail>
+              <ion-label>
+                <p class="text-3xl">{{transaction?.title ?? 'Transaction'}}</p>
+                <p class="mt-12">{{ transaction.date | date: 'mediumDate'}}</p>
+              </ion-label>
+              <ion-label slot="end">
+                <p class="pb-4">{{transaction?.amount ?? 0}}</p>
+                <ion-chip>
+                  <p>{{transaction?.category?.type ?? '0'}}</p>
+                </ion-chip>
+              </ion-label>
+            </ion-item>
+            </ion-list>
+        </ng-container>
+        <ng-template #noTransactions>
+          <div class="p-12 flex justify-center items-center">
+            <p class="text-md text-disabled">No transactions found</p>
+          </div>
+        </ng-template>
+      </div>
     </div>
   </ng-container>
 

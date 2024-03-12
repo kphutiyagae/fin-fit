@@ -6,7 +6,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary': '#413aa3'
+        'primary': '#413aa3',
+        'disabled': '#7A7A7A'
       },
       // fontFamily: {
       //   'outfit': ['Outfit', 'sans-serif']
