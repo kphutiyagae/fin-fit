@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {concat, filter, map, merge, Observable, switchMap, tap} from "rxjs";
 import {IBudget} from "../../models/IBudget";
 import {Store} from "@ngxs/store";
-import {ActivatedRoute, UrlSegment} from "@angular/router";
+import {ActivatedRoute, Router, UrlSegment} from "@angular/router";
 import {BudgetState} from "../../store/budget/state/BudgetState";
 import {getRemainingDays} from "../../utils/utils";
 @Component({
@@ -16,7 +16,11 @@ export class BudgetComponent {
 
   calculateRemainingDays = getRemainingDays;
 
-  constructor(private store: Store, private route: ActivatedRoute) {
+  navigateToHome(){
+    this.router.navigate([`/`]);
+  }
+
+  constructor(private store: Store, private route: ActivatedRoute, private router: Router) {
     this.currentBudget$ = this.route.url
       .pipe(
         map( urlSegments => {
