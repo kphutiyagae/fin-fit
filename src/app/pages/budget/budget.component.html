@@ -5,7 +5,19 @@
       <p class="mt-4">R{{currentBudget.budgetLimit - currentBudget.totalExpense }} remaining for the next {{calculateRemainingDays(currentBudget?.dateStart ?? '', currentBudget?.dateEnd ?? '')}} days</p>
     </div>
     <div class="w-11/12 bg-white shadow-lg rounded-md relative mx-4 min-h-32 -top-12 flex flex-col">
-      <p class="mt-8 ml-8 text-gray-500">You have spent <span class="block text-4xl mt-2 text-primary font-bold">R300</span></p>
+      <div class="flex items-center justify-between">
+        <p class="mt-8 ml-8 text-gray-500">You have spent <span class="block text-4xl mt-2 text-primary font-bold">R300</span></p>
+        <button class="flex flex-row items-center gap-1 text-white bg-primary p-2 rounded-md mr-6">
+          <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+            <path fill="none" stroke-miterlimit="10" stroke-width="32" d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z">
+            </path>
+            <path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 176v160m80-80H176">
+            </path>
+          </svg>
+          <p class="text-xs">Add transaction</p>
+        </button>
+      </div>
+
       <div class="flex justify-between px-8 pt-4">
       <span>
         <p class="text-sm text-gray-500">Spent amount</p>
@@ -49,6 +61,7 @@
         </ng-template>
       </div>
     </div>
+    <ion-modal #editBudgetModal trigger="open-edit-budget-modal"></ion-modal>
   </ng-container>
 
   <ng-template #noBudgetFound>
