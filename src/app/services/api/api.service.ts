@@ -38,7 +38,10 @@ export class ApiService {
     }) );
   }
 
-  updateBudget(){}
+  updateBudgetList(budgetId:string, budgetList: IBudget[]){
+    const tripDocRef = doc(this.firestore, `budgets/${budgetId}`);
+    return from( updateDoc(tripDocRef, { 'budgets': budgetList }) );
+  }
 
   getBudgetsByUserId(uid: string){
     const tripCollection = collection(this.firestore, 'budgets');

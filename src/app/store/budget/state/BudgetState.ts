@@ -3,7 +3,7 @@ import {Action, Selector, State, StateContext, Store} from "@ngxs/store";
 import {
   AddBudget,
   ClearUserBudgets,
-  GetAllUserBudgets,
+  GetAllUserBudgets, UpdateBudget,
   UpdateCurrentBudget, UpdateExpenseLimit,
   UpdateTotalExpenses,
   UpdateUserBudgets
@@ -110,6 +110,17 @@ export class BudgetState {
     this.store.dispatch(new UpdateUserBudgets(newBudgetList));
   }
 
+  @Action(UpdateBudget)
+  updateBudget({patchState, getState}: StateContext<BudgetStateModel>, {payload}: UpdateBudget){
+    const budgetIndex = getState()?.budgets?.findIndex( budget =>  budget.id === payload.id);
+
+    if(budgetIndex >= 0){
+      const updatedBudgetList = getState().budgets;
+      updatedBudgetList[budgetIndex] = payload;
+      this.apiService.updateBudgetList(getState().currentBudget, updatedBudgetList)
+    }
+
+  }
   constructor(private apiService: ApiService, private store: Store) {
   }
 }

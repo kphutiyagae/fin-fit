@@ -59,7 +59,8 @@ export class BudgetComponent {
         map( urlSegments => {
           if(urlSegments.at(1)) {
             const currentBudgetId = urlSegments?.at(1)?.toString() ?? '';
-            this.store.dispatch(new UpdateCurrentBudget(currentBudgetId));
+            // this.store.dispatch(new UpdateCurrentBudget(currentBudgetId));
+            this.currentBudgetId = currentBudgetId;
             return currentBudgetId;
           }
           return urlSegments?.at(0)?.toString() ?? '';
@@ -94,11 +95,6 @@ export class BudgetComponent {
       transactionCategory: new FormControl('', [Validators.required])
     });
 
-    this.store.select(BudgetState.getCurrentBudget)
-      .pipe(
-        last(),
-        map( id => this.currentBudgetId = id)
-      ).subscribe()
   }
 
 }
