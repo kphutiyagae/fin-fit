@@ -22,3 +22,25 @@ export function getRemainingDays(startDate: string, endDate:string){
 
   return 0;
 }
+
+export function timestampToUTC(timestamp: string){
+  if(timestamp.length !== 0){
+    const dateString = Number(timestamp) * 1000;
+    const timestampString =  Date.parse(dateString.toString());
+
+    console.log(timestampString);
+
+    return timestampString
+  }
+  return  '';
+}
+
+export function dateToTimestamp(dateString: string) {
+  if(dateString.length !== 0){
+    const parsedDate = Date.parse(dateString);
+    return (parsedDate * 1000).toString();
+  }
+
+  return '';
+
+}
